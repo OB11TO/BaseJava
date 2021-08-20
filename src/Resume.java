@@ -3,8 +3,9 @@
  */
 public class Resume {
 
-    // Unique identifier
+    // Unique identifier (уникальный индентификатор)
     String uuid;
+
 
     @Override
     public String toString() {

@@ -26,8 +26,15 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) { // расширяем массив на 1 и добавляем резюме
-        storage[size] = r;
-        size++;
+        int index = getIndex(r.getUuid());
+        if (!(index == -1)) {
+            System.out.println("Resume " + r.getUuid() + " already exist");
+        } else if (size > storage.length) {
+            System.out.println("Storage overflow");
+        } else {
+            storage[size] = r;
+            size++;
+        }
     }
 
 

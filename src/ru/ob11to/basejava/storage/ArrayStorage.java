@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Array based ru.ob11to.basejava.storage for Resumes
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
     private static final int STORAGE_LIMIT = 10000;
     private final Resume[] storage = new Resume[STORAGE_LIMIT];  //место хранения
     private int size = 0;  //размер массива

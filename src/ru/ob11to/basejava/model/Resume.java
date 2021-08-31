@@ -3,7 +3,7 @@ package ru.ob11to.basejava.model;
 /**
  * Initial resume class
  */
-public class Resume {
+public class Resume implements Comparable<Resume>{
 
     // Unique identifier (уникальный индентификатор)
    private String uuid;
@@ -35,5 +35,10 @@ public class Resume {
     @Override
     public String toString() {
         return uuid;
+    }
+
+    @Override
+    public int compareTo(Resume o) { //для сравнения резюме на уровне логики
+        return uuid.compareTo(o.uuid); //?
     }
 }

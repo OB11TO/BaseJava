@@ -21,7 +21,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void update(Resume r) { //в дальнейшем будет реализовывать изменение в резюме
         int index = getIndex(r.getUuid());
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Resume " + r.getUuid() + " no exist👻");
         } else {
             storage[index] = r;
@@ -30,7 +30,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void save(Resume r) { // расширяем массив на 1 и добавляем резюме
         int index = getIndex(r.getUuid()); // получаем число, по которому будем сравнивать, есть ли данное резюме
-        if (!(index == -1)) {
+        if (index >= 0) {
             System.out.println("Resume " + r.getUuid() + " already exist");
         } else if (size > STORAGE_LIMIT) {
             System.out.println("Storage overflow");
@@ -38,15 +38,17 @@ public abstract class AbstractArrayStorage implements Storage {
             //пропишем логику
             insertElement(r,index);
             size++; // увеличиваем размер массива
+           // System.out.println(size);
         }
     }
 
 
     public void delete(String uuid) { //происходит удаление резюме
         int index = getIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Resume " + uuid + " no exist");
         } else {
+            System.out.println(index);
             fillDeletedElement(index);
             storage[size - 1] = null;
             size--;

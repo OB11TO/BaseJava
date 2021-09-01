@@ -4,37 +4,25 @@ import ru.ob11to.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public class SortedArrayStorage extends AbstractArrayStorage{
+public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public void update(Resume r) {
-
-    }
-
-    @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }
-
-    @Override
-    protected int getIndex(String uuid) {
+    protected int getIndex(String uuid) { //сравниваем, есть ли такое резюме в массиве
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid); // получаем резюме
-        return Arrays.binarySearch(storage,0,size,searchKey); // ищем это резюме
+        return Arrays.binarySearch(storage, 0, size, searchKey); // возвращает позицию полученного резюме
+    }
+
+    @Override
+    protected void fillDeletedElement(int index) {
+        int numMoved = size - index - 1;
+        if(numMoved > 0){
+            System.arraycopy(storage,index+1,storage, index,numMoved);
+        }
+    }
+
+    @Override
+    protected void insertElement(Resume r, int index) {
+        storage[size] = r; // добавляем резюме массиву
     }
 }

@@ -1,5 +1,8 @@
 package ru.ob11to.basejava.storage;
 
+import ru.ob11to.basejava.exception.ExistStorageException;
+import ru.ob11to.basejava.exception.NotExistStorageException;
+import ru.ob11to.basejava.exception.StorageException;
 import ru.ob11to.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -22,7 +25,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume r) { //в дальнейшем будет реализовывать изменение в резюме
         int index = getIndex(r.getUuid());
         if (index < 0) {
-            System.out.println("Resume " + r.getUuid() + " no exist👻");
+            throw new NotExistStorageException(r.getUuid());
         } else {
             storage[index] = r;
         }
@@ -31,14 +34,14 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) { // расширяем массив на 1 и добавляем резюме
         int index = getIndex(r.getUuid()); // получаем число, по которому будем сравнивать, есть ли данное резюме
         if (index >= 0) {
-            System.out.println("Resume " + r.getUuid() + " already exist");
+            throw new ExistStorageException(r.getUuid());
         } else if (size > STORAGE_LIMIT) {
-            System.out.println("Storage overflow");
+            throw new StorageException("Storage overflow", r.getUuid());
         } else {
             //пропишем логику
-            insertElement(r,index);
+            insertElement(r, index);
             size++; // увеличиваем размер массива
-           // System.out.println(size);
+            // System.out.println(size);
         }
     }
 
@@ -46,7 +49,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) { //происходит удаление резюме
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " no exist");
+            throw new NotExistStorageException(uuid);
         } else {
             System.out.println(index);
             fillDeletedElement(index);
@@ -58,8 +61,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) { // пробегаем по массиву, если резюме совпадают, возвращаем его.
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " no exist");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
@@ -76,5 +78,5 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void fillDeletedElement(int index);
 
-    protected abstract void insertElement(Resume r,int index);
+    protected abstract void insertElement(Resume r, int index);
 }

@@ -8,8 +8,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int getIndex(String uuid) { //сравниваем, есть ли такое резюме в массиве
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid); // получаем резюме
+        Resume searchKey = new Resume(uuid); // создаем с помощью конструктора резюме
         return Arrays.binarySearch(storage, 0, size, searchKey); // возвращает позицию полученного резюме
     }
 

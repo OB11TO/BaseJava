@@ -1,3 +1,5 @@
+package ru.ob11to.basejava;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Scanner;

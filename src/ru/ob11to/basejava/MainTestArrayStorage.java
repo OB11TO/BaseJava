@@ -5,7 +5,7 @@ import ru.ob11to.basejava.storage.ArrayStorage;
 import ru.ob11to.basejava.storage.SortedArrayStorage;
 
 /**
- * Test for your ru.ob11to.basejava.storage.ArrayStorage implementation
+ * ru.ob11to.basejava.Test for your ru.ob11to.basejava.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
     final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();

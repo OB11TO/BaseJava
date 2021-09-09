@@ -155,6 +155,10 @@ public abstract class AbstractArrayStorageTest {
 
     }
 
+    /**
+     *Создаем массив резюме.
+     * Проверяем содержатся ли они в массиве.
+     */
     @Test
     public void getAll() throws Exception {
         Resume[] resume = storage.getAll();

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Test extends JPanel {
 
-    Image img = new ImageIcon("/home/obiito/Загрузки/aksi.png").getImage();
+    Image img = new ImageIcon("/home/obiito/Загрузки/aksi.png").getImage(); // проблема с директорией
 
     public static void main(String[] args) throws InterruptedException {
 

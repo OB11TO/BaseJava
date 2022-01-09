@@ -5,15 +5,16 @@ import java.util.UUID;
 /**
  * Initial resume class
  */
-public class Resume implements Comparable<Resume>{
+public class Resume implements Comparable<Resume> {
 
-    // Unique identifier (уникальный индентификатор)
-   private final String uuid;
+    // Unique identifier (уникальный идентификатор)
+    private final String uuid;
 
-   public Resume(){
-      this(UUID.randomUUID().toString());
-   }
-    public Resume(String uuid) {
+    public Resume() {
+        this(UUID.randomUUID().toString());
+    }
+
+    public Resume(final String uuid) {
         this.uuid = uuid;
     }
 
@@ -33,13 +34,8 @@ public class Resume implements Comparable<Resume>{
     }
 
     public String getUuid() {
-       return uuid;
-   }
-
-   /*public void setUuid(String uuid)
-   {
-      this.uuid= uuid;
-   }*/
+        return uuid;
+    }
 
     @Override
     public String toString() {

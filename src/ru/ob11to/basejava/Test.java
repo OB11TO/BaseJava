@@ -105,3 +105,6 @@ class Hunter {
 
     String day();
 }
+
+
+

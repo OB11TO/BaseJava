@@ -29,17 +29,17 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_4 = "uuid4";
     private static final Resume RESUME_4 = new Resume(UUID_4);
 
-    //?????
+
     protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
     /**
      * Чиститься и инициализируется массив
-     * Создаются 3 новый резюме
+     * Создаются 3 новых резюме
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         storage.clear();
         storage.save(RESUME_1);
         storage.save(RESUME_2);
@@ -56,7 +56,7 @@ public abstract class AbstractArrayStorageTest {
 
     /**
      * Проверка на размер.
-     * assertEquals сравнивает размер, который передали(изначальный, который инициализировали
+     * assertEquals сравнивает размер, который передали (изначальный, который инициализировали
      * с размером массива)
      *
      * @param size размер массива изначального
@@ -75,7 +75,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     /**
-     * Создаем новый резюме.
+     * Создаем новое резюме.
      * Вызываем функцию update.
      * Сравниваем заменилась ли она новым значением.
      */
@@ -87,7 +87,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     /**
-     * Добавим этот резюме в массив.
+     * Добавим это резюме в массив.
      * Проверим, увеличился размер в массиве.
      * Вызываем функцию, которая проверит, находится ли данное резюме в массиве.
      */
@@ -97,14 +97,17 @@ public abstract class AbstractArrayStorageTest {
         assertSize(4);
         assertGet(RESUME_4);
     }
+
     @Test(expected = ExistStorageException.class)
     public void saveExist() throws Exception {
         storage.save(RESUME_1);
     }
-    @Test(expected = StorageException.class)
-    public void saveOverflow() throws Exception {
+
+    //@Test(expected = StorageException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void saveOverflow()  {
         try {
-            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT+1; i++) {
+            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
@@ -112,6 +115,7 @@ public abstract class AbstractArrayStorageTest {
         }
         storage.save(new Resume());
     }
+
     /**
      * Первый параметр - это RESUME_4, которое создали для проверки.
      * Второй параметр - это RESUME_4, которое положили в массив storage.
@@ -145,7 +149,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     /**
-     * Вызываем метод, который проверит находятся ли эти резюме в storage.
+     * Вызываем метод, который проверит, где находятся эти резюме в storage.
      */
     @Test
     public void get() throws Exception {
@@ -156,7 +160,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     /**
-     *Создаем массив резюме.
+     * Создаем массив резюме.
      * Проверяем содержатся ли они в массиве.
      */
     @Test

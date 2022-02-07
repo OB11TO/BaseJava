@@ -1,27 +1,41 @@
 package ru.ob11to.basejava.storage;
 
-import ru.ob11to.basejava.exception.ExistStorageException;
-import ru.ob11to.basejava.exception.NotExistStorageException;
 import ru.ob11to.basejava.exception.StorageException;
 import ru.ob11to.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10000; //size mass
+public abstract class AbstractArrayStorage extends AbstractStorage {
 
+    protected static final int STORAGE_LIMIT = 10000; //size mass
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];  //место хранения
     protected int size = 0;  //размер массива
 
+
+    protected abstract Integer getSearchKey(String uuid);//Поиск позиции резюме в зависимости от реализации
+
+    protected abstract void fillDeletedElement(int index);//Реализация удаления резюме
+
+    protected abstract void insertElement(Resume r, int index);//Реализация добавления резюме
+
+    /* Вернет размер массива */
     public int size() {
         return size;
-    } //размер массива
+    }
 
-    public void clear() { //чистим массив, пробегаем по всем элементам и удаляем резюме
+    /* Чистим массив, пробегаем по всем элементам и удаляем резюме*/
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    /*Обновляет резюме*/
+    @Override
+    protected void doUpdate(Resume r, Object index) {
+        storage[(Integer) index] = r;
+    }
+
+    /* Не используем
     public void update(Resume r) { //в дальнейшем будет реализовывать изменение в резюме
         int index = getIndex(r.getUuid());
         if (index < 0) {
@@ -29,54 +43,58 @@ public abstract class AbstractArrayStorage implements Storage {
         } else {
             storage[index] = r;
         }
-    }
+    }*/
 
-    public void save(Resume r) { // расширяем массив на 1 и добавляем резюме
-        int index = getIndex(r.getUuid()); // получаем число, по которому будем сравнивать, есть ли данное резюме
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else if (size > STORAGE_LIMIT) {
+    /*Сохраняет новое резюме*/
+    @Override
+    protected void doSave(Resume r, Object index) {
+        if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
             //пропишем логику
-            insertElement(r, index);
+            insertElement(r, (Integer) index);
             size++; // увеличиваем размер массива
             // System.out.println(size);
         }
     }
 
-
-    public void delete(String uuid) { //происходит удаление резюме
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            System.out.println(index);
-            fillDeletedElement(index);
-            storage[size - 1] = null;
-            size--;
-        }
+    /*Удаляет резюме*/
+    @Override
+    protected void doDelete(Object index) {
+        System.out.println(index);
+        fillDeletedElement((Integer) index);
+        storage[size - 1] = null;
+        size--;
     }
 
+    /*Выводит резюме*/
+    @Override
+    protected Resume doGet(Object index) {
+        return storage[(int) index];
+    }
+
+   /* не используем
     public Resume get(String uuid) { // пробегаем по массиву, если резюме совпадают, возвращаем его.
-        int index = getIndex(uuid);
+        int index = getSearchKey(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
         return storage[index];
-    }
+    }*/
 
     /**
      * @return array, contains only Resumes in ru.ob11to.basejava.storage (without null)
      * массив, содержит только резюме в хранилище (без null)
+     * вернет массив резюме
      */
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected abstract int getIndex(String uuid);
+    /*true - резюме существует в массиве*/
+    @Override
+    protected boolean isExist(Object index) {
+        return (Integer) index >= 0;
+    }
 
-    protected abstract void fillDeletedElement(int index);
-
-    protected abstract void insertElement(Resume r, int index);
 }

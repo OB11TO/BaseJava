@@ -11,7 +11,7 @@ import ru.ob11to.basejava.model.Resume;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-public abstract class AbstractArrayStorageTest {
+public abstract class AbstractStorageTest {
     /**
      * Массив
      */
@@ -30,7 +30,7 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume RESUME_4 = new Resume(UUID_4);
 
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -50,7 +50,7 @@ public abstract class AbstractArrayStorageTest {
      * Проверка на размер. Вызывается функция, которая проверит.
      */
     @Test
-    public void size() throws Exception {
+    public void size() {
         assertSize(3);
     }
 
@@ -61,7 +61,7 @@ public abstract class AbstractArrayStorageTest {
      *
      * @param size размер массива изначального
      */
-    private void assertSize(int size) throws Exception {
+    private void assertSize(int size) {
         assertEquals(size, storage.size());
     }
 
@@ -69,7 +69,7 @@ public abstract class AbstractArrayStorageTest {
      * Сначала чистит массив, а затем проверяет пустой ли он.
      */
     @Test
-    public void clear() throws Exception {
+    public void clear() {
         storage.clear();
         assertSize(0);
     }
@@ -80,7 +80,7 @@ public abstract class AbstractArrayStorageTest {
      * Сравниваем заменилась ли она новым значением.
      */
     @Test
-    public void update() throws Exception {
+    public void update() {
         Resume newResume = new Resume(UUID_1);
         storage.update(newResume);
         assertSame(newResume, storage.get(UUID_1));
@@ -92,20 +92,20 @@ public abstract class AbstractArrayStorageTest {
      * Вызываем функцию, которая проверит, находится ли данное резюме в массиве.
      */
     @Test
-    public void save() throws Exception {
+    public void save() {
         storage.save(RESUME_4);
         assertSize(4);
         assertGet(RESUME_4);
     }
 
     @Test(expected = ExistStorageException.class)
-    public void saveExist() throws Exception {
+    public void saveExist() {
         storage.save(RESUME_1);
     }
 
-    //@Test(expected = StorageException.class)
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void saveOverflow()  {
+    @Test(expected = StorageException.class)
+    //@Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void saveOverflow() {
         try {
             for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
@@ -127,7 +127,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void delete() throws Exception {
+    public void delete() {
         storage.delete(UUID_1);
         assertSize(2);
         storage.get(UUID_1);
@@ -139,12 +139,12 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void getNotExist() throws Exception {
+    public void getNotExist() {
         storage.get("dummy");
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void deleteNotExist() throws Exception {
+    public void deleteNotExist() {
         storage.delete("dummy");
     }
 
@@ -152,7 +152,7 @@ public abstract class AbstractArrayStorageTest {
      * Вызываем метод, который проверит, где находятся эти резюме в storage.
      */
     @Test
-    public void get() throws Exception {
+    public void get() {
         assertGet(RESUME_1);
         assertGet(RESUME_2);
         assertGet(RESUME_3);
@@ -164,7 +164,7 @@ public abstract class AbstractArrayStorageTest {
      * Проверяем содержатся ли они в массиве.
      */
     @Test
-    public void getAll() throws Exception {
+    public void getAll() {
         Resume[] resume = storage.getAll();
         assertEquals(3, resume.length);
         assertEquals(RESUME_1, resume[0]);

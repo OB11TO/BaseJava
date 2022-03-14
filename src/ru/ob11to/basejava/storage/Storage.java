@@ -2,6 +2,8 @@ package ru.ob11to.basejava.storage;
 
 import ru.ob11to.basejava.model.Resume;
 
+import java.util.List;
+
 public interface Storage {
     /*
     Чистка резюме
@@ -31,7 +33,8 @@ public interface Storage {
     /*
     Вывести все резюме
      */
-    Resume[] getAll();
+    //Resume[] getAll();
+    List<Resume> getAllSorted();
 
     /*
     Размер

@@ -4,6 +4,9 @@ import ru.ob11to.basejava.exception.ExistStorageException;
 import ru.ob11to.basejava.exception.NotExistStorageException;
 import ru.ob11to.basejava.model.Resume;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Task 5.1
  */
@@ -21,6 +24,8 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume doGet(Object searchKey); //реализация get
 
     protected abstract Object getSearchKey(String uuid);//для поиска существования резюме
+
+    protected abstract List<Resume> doCopyAll();
 
     public void update(Resume r) { //в дальнейшем будет реализовывать изменение в резюме
         /* возвращает сначала String резюме, а затем идет поиск индекса в резюме */
@@ -63,6 +68,13 @@ public abstract class AbstractStorage implements Storage {
             throw new ExistStorageException(uuid);
         }
         return searchKey;
+    }
+
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> list = doCopyAll();
+        Collections.sort(list);
+        return list;
     }
 
 }

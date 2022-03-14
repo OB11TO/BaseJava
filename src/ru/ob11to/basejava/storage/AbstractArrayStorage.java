@@ -4,6 +4,7 @@ import ru.ob11to.basejava.exception.StorageException;
 import ru.ob11to.basejava.model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
@@ -87,8 +88,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
      * массив, содержит только резюме в хранилище (без null)
      * вернет массив резюме
      */
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+    public List<Resume> doCopyAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     /*true - резюме существует в массиве*/

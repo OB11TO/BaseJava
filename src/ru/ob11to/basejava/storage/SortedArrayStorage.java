@@ -12,7 +12,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected Integer getSearchKey(String uuid) { //сравниваем, есть ли такое резюме в массиве
-        Resume searchKey = new Resume(uuid); // создаем с помощью конструктора резюме
+        Resume searchKey = new Resume(uuid, "dummy"); // создаем с помощью конструктора резюме
         return Arrays.binarySearch(storage, 0, size, searchKey, RESUME_COMPARATOR); // возвращает позицию полученного резюме
     }
 

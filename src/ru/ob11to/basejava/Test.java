@@ -106,5 +106,28 @@ class Hunter {
     String day();
 }
 
+class TestIncp {
+    public static void main(String[] args) {
+        int a = 1;
+        int b;
+        int c;
+
+
+        System.out.println(a++ - ++a); //  1++ - 2
+       System.out.println(a+++a); // 1 + 1 = 3 - a++ + a
+        System.out.println( a+ ++a); // 2 + 3 = 5
+       System.out.println( a++ +a); //  3 + 3 = 7
+        System.out.println(a+++a); // 4++ + 4 = 9
+        a = 1;
+        System.out.println();
+        System.out.println(a= a+++a); // 1++ + 1 = 3 - a++  +a
+        System.out.println( a= a+ ++a); // 3+ ++3 = 7
+        System.out.println( a= a++ +a); //  7++ + 7 = 15
+        System.out.println(a= a+++a); // 15++ + 15 = 31
+
+
+    }
+}
+
 
 

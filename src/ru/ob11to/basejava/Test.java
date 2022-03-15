@@ -3,6 +3,8 @@ package ru.ob11to.basejava;
 
 import java.lang.annotation.*;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Game(name = "Крикет", day = "воскресенье")
@@ -105,3 +107,38 @@ class Hunter {
 
     String day();
 }
+
+class TestIncp {
+    public static void main(String[] args) {
+        int a = 1;
+        int b;
+        int c;
+
+        List<? super Number> ints = new ArrayList<>();
+        ints.add(1);
+        ints.add(2);
+        List<? super Number> nums = ints;
+        nums.add(3.3); // compile-time error
+
+        System.out.println(a++ - ++a); //  1++ - 2
+       System.out.println(a+++a); // 1 + 1 = 3 - a++ + a
+        System.out.println( a+ ++a); // 2 + 3 = 5
+       System.out.println( a++ +a); //  3 + 3 = 7
+        System.out.println(a+++a); // 4++ + 4 = 9
+        a = 1;
+        System.out.println();
+        System.out.println(a= a+++a); // 1++ + 1 = 3 - a++  +a
+        System.out.println( a= a+ ++a); // 3+ ++3 = 7
+        System.out.println( a= a++ +a); //  7++ + 7 = 15
+        System.out.println(a= a+++a); // 15++ + 15 = 31
+
+
+    }
+
+    public static <T> T getFirst(List<? extends T> list) {
+        return list.get(0); // compile-time error
+    }
+}
+
+
+

@@ -9,20 +9,20 @@ import java.util.Map;
 
 public class MapUuidStorage extends AbstractStorage {
     private final Map<String,Resume> map = new HashMap<>();
-    
+
     @Override
     protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+        return map.containsKey((String) searchKey);
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        map.put(r.getUuid(), r);
+        map.put((String) searchKey, r);
     }
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        map.put(r.getUuid(), r);
+        map.put((String) searchKey, r);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
-        return map.get(uuid);
+    protected String getSearchKey(String searchKey) {
+        return searchKey;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.ob11to.basejava.model;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -16,6 +17,8 @@ public class Resume implements Comparable<Resume> {
     }
 
     public Resume(final String uuid, String fullName) {
+        Objects.requireNonNull(uuid, "Error: uuid must not be null! "); //поверка на null
+        Objects.requireNonNull(fullName, "Error: fullName must not be null! ");
         this.uuid = uuid;
         this.fullName = fullName;
     }

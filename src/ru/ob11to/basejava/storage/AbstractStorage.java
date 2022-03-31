@@ -6,12 +6,16 @@ import ru.ob11to.basejava.model.Resume;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static java.util.logging.Logger.getLogger;
 
 /**
  * Task 5.1
  */
 //SK - S
 public abstract class AbstractStorage<SK> implements Storage {
+    private static final Logger LOG = getLogger(AbstractStorage.class.getName());
 
     protected abstract boolean isExist(SK searchKey); //метод для проверки существования резюме (должно быть true)
 
@@ -29,12 +33,14 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     public void update(Resume r) { //в дальнейшем будет реализовывать изменение в резюме
         /* возвращает сначала String резюме, а затем идет поиск индекса в резюме */
+        LOG.info("Update" + r);
         SK searchKey = getExistedSearchKey(r.getUuid());
         doUpdate(r, searchKey);
     }
 
 
     public void save(Resume r) { // расширяем массив на 1 и добавляем резюме
+        LOG.info("Save" + r);
         SK searchKey = getNotExistedSearchKey(r.getUuid()); // получаем число, по которому будем сравнивать, есть ли данное резюме
         doSave(r, searchKey);
 
@@ -42,6 +48,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
 
     public void delete(String uuid) { //происходит удаление резюме
+        LOG.info("Delete" + uuid);
         SK searchKey = getExistedSearchKey(uuid);
         doDelete(searchKey);
 
@@ -49,6 +56,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
 
     public Resume get(String uuid) {
+        LOG.info("Get" + uuid);
         SK searchKey = getExistedSearchKey(uuid);
         return doGet(searchKey);
     }
@@ -57,6 +65,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getExistedSearchKey(String uuid) {
         SK searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " no exist))))))");
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
@@ -65,6 +74,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getNotExistedSearchKey(String uuid) {
         SK searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         }
         return searchKey;

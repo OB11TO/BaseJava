@@ -1,7 +1,7 @@
 # Разработка web-приложения "База данных резюме"
 
 Cоздается с нуля web-приложение, реализуя разные способы хранения резюме. Проект включает в себя следующее:
-  - **Технологии:** Java 8, GitHub/Git, JUnit, Logging, GSON, JAXB, SQL, PostgreSQL, Сервлеты, HTML, JSP, JSTL, Tomcat, Maven и многое другое
+  - **Технологии:** Java 8, GitHub/Git, JUnit, Logging, GSON, JAXB, SQL, PostgreSQL, Сервлеты, HTML, JSP, JSTL, Tomcat
   - **Различные способы реализации хранения резюме:**
      - в сортированном и не сортированном массиве
      - в коллекциях (List, Map)

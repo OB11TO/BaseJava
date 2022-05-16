@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 
 /**
- * Task 5.1
+ * Task 5.1/1
  */
 //SK - S
 public abstract class AbstractStorage<SK> implements Storage {
